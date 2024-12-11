@@ -18,6 +18,7 @@ class App {
       return { ball, strike };
     }
     async function playGame() {
+      OutputView.displayWelcomeMessage();
       const { numbers } = new NumberMaker();
       console.log(numbers);
       while (true) {
@@ -31,10 +32,16 @@ class App {
       }
     }
 
-    async function playGames() {}
-    playGame();
+    async function playGames() {
+      while (true) {
+        const retry = await InputView.getValidRetry();
+        if (retry) await playGame();
+        if (!retry) break;
+      }
+    }
+    await playGame();
+    await playGames();
   }
 }
-new App().play();
 
 export default App;

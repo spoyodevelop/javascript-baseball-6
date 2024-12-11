@@ -4,7 +4,9 @@ const OutputView = {
   printMessage(message) {
     Console.print(message);
   },
-
+  displayWelcomeMessage() {
+    this.printMessage('숫자 야구 게임을 시작합니다.');
+  },
   displayBallStrike(ball, strike) {
     let ballString = '';
     let strikeString = '';

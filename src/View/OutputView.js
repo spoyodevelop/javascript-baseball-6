@@ -15,9 +15,12 @@ const OutputView = {
       strikeString += `${strike}스트라이크`;
     }
     if (ball === 0 && strike === 0) this.printMessage('낫싱');
+    if (ball === 0 && strike > 0) this.printMessage(`${strikeString}`);
     else this.printMessage(`${ballString} ${strikeString}`);
+  },
+  displayWinningMessage() {
+    this.printMessage('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
   },
 };
 
 export default OutputView;
-d;

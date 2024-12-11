@@ -1,13 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './View/InputView.js';
 import NumberMaker from './NumberMaker.js';
+import OutputView from './View/OutputView.js';
 
 class App {
   async play() {
-    const userNumbers = await InputView.getValidNumber();
-
-    const { numbers } = new NumberMaker();
-
     function checkMatch(userNumbers, numbers) {
       let ball = 0;
       let strike = 0;
@@ -22,11 +19,20 @@ class App {
     }
     async function playGame() {
       const { numbers } = new NumberMaker();
+      console.log(numbers);
       while (true) {
         const userNumbers = await InputView.getValidNumber();
         const { ball, strike } = checkMatch(userNumbers, numbers);
+        OutputView.displayBallStrike(ball, strike);
+        if (strike === 3) {
+          OutputView.displayWinningMessage();
+          break;
+        }
       }
     }
+
+    async function playGames() {}
+    playGame();
   }
 }
 new App().play();

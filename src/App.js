@@ -20,6 +20,13 @@ class App {
 
       return { ball, strike };
     }
+    async function playGame() {
+      const { numbers } = new NumberMaker();
+      while (true) {
+        const userNumbers = await InputView.getValidNumber();
+        const { ball, strike } = checkMatch(userNumbers, numbers);
+      }
+    }
   }
 }
 new App().play();

@@ -1,42 +1,14 @@
 import { Console } from '@woowacourse/mission-utils';
 import InputView from './View/InputView.js';
+import GamePlay from './GamePlay.js';
 import NumberMaker from './NumberMaker.js';
-import OutputView from './View/OutputView.js';
 
 class App {
   async play() {
-    function checkMatch(userNumbers, numbers) {
-      let ball = 0;
-      let strike = 0;
-
-      for (let i = 0; i < 3; i++) {
-        if (userNumbers[i] === numbers[i]) strike++;
-        if (userNumbers[i] !== numbers[i] && numbers.includes(userNumbers[i]))
-          ball++;
-      }
-
-      return { ball, strike };
-    }
-
-    async function playGame() {
-      OutputView.displayWelcomeMessage();
-      const { numbers } = new NumberMaker();
-      console.log(numbers);
-
-      while (true) {
-        const userNumbers = await InputView.getValidNumber();
-        const { ball, strike } = checkMatch(userNumbers, numbers);
-        OutputView.displayBallStrike(ball, strike);
-        if (strike === 3) {
-          OutputView.displayWinningMessage();
-          return true; // 게임 종료 신호
-        }
-      }
-    }
-
+    const gamePlay = new GamePlay(NumberMaker);
     async function playGames() {
       do {
-        const isWon = await playGame();
+        const isWon = await gamePlay.playGame();
         if (!isWon) break;
       } while (await InputView.getValidRetry()); // retry 여부 체크
     }
@@ -44,5 +16,5 @@ class App {
     await playGames();
   }
 }
-new App().play();
+
 export default App;

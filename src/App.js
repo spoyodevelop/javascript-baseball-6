@@ -17,31 +17,32 @@ class App {
 
       return { ball, strike };
     }
+
     async function playGame() {
       OutputView.displayWelcomeMessage();
       const { numbers } = new NumberMaker();
       console.log(numbers);
+
       while (true) {
         const userNumbers = await InputView.getValidNumber();
         const { ball, strike } = checkMatch(userNumbers, numbers);
         OutputView.displayBallStrike(ball, strike);
         if (strike === 3) {
           OutputView.displayWinningMessage();
-          break;
+          return true; // 게임 종료 신호
         }
       }
     }
 
     async function playGames() {
-      while (true) {
-        const retry = await InputView.getValidRetry();
-        if (retry) await playGame();
-        if (!retry) break;
-      }
+      do {
+        const isWon = await playGame();
+        if (!isWon) break;
+      } while (await InputView.getValidRetry()); // retry 여부 체크
     }
-    await playGame();
+
     await playGames();
   }
 }
-
+new App().play();
 export default App;
